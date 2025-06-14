@@ -1,0 +1,14 @@
+def read_graph(filename):
+    with open(filename, "r") as file:
+        n = int(file.readline())
+        adj = []
+        for _ in range(n):
+            line = file.readline().strip()
+            neighbors = list(map(int, line.split()))
+            # Loại bỏ số 0 (đỉnh cô lập)
+            if neighbors == [0]:
+                adj.append([])
+            else:
+                adj.append([v - 1 for v in neighbors])  # Đưa về chỉ số từ 0
+    return n, adj
+
