@@ -19,5 +19,37 @@ def dfs(u, visited, adj):
         if not visited[v]:
             dfs(v, visited, adj)
 
+# Check for strong connectivity of a graph (kiểm tra đồ thị liên thông mạnh)
+def is_strongly_connected(n, adj):
+    for i in range(n):
+        visited = [False] * n
+        dfs(i, visited, adj)
+        if not all(visited):
+            return False
+    return True
 
+# Check for weak connectivity of a graph (kiểm tra đồ thị liên thông yếu)
+def is_weakly_connected(n, adj):
+    # Create an undirected graph (tạo đồ thị vô hướng)
+    undirected = [[] for _ in range(n)]
+    for u in range(n):
+        for v in adj[u]:
+            undirected[u].append(v)
+            undirected[v].append(u)
 
+    visited = [False] * n
+    dfs(0, visited, undirected)
+    return all(visited)
+
+def main():
+    n, adj = read_graph("dske.in")
+
+    if is_strongly_connected(n, adj):
+        print("Strongly connected graph.")
+    elif is_weakly_connected(n, adj):
+        print("Weakly connected graph.")
+    else:
+        print("The graph is neither strongly connected nor weakly connected.")
+
+if __name__ == "__main__":
+    main() 
