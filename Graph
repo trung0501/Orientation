@@ -1,5 +1,4 @@
-# Read the list from the file (đọc danh sách kề từ file) 
-
+# Read the list from the file 
 def read_graph(filename):
     with open(filename, "r") as file:
         n = int(file.readline())
@@ -13,16 +12,14 @@ def read_graph(filename):
                 adj.append([v - 1 for v in neighbors])  
     return n, adj
 
-# Recursive function for DFS of a graph (hàm đệ quy duyệt đồ thị theo chiều sâu-DFS)
-
+# Recursive function for DFS of a graph 
 def dfs(u, visited, adj):
     visited[u] = True
     for v in adj[u]:
         if not visited[v]:
             dfs(v, visited, adj)
 
-# Check for strong connectivity of a graph (kiểm tra đồ thị liên thông mạnh)
-
+# Check for strong connectivity of a graph 
 def is_strongly_connected(n, adj):
     for i in range(n):
         visited = [False] * n
@@ -31,18 +28,14 @@ def is_strongly_connected(n, adj):
             return False
     return True
 
-# Check for weak connectivity of a graph (kiểm tra đồ thị liên thông yếu)
-
+# Check for weak connectivity of a graph 
 def is_weakly_connected(n, adj):
-
     # Create an undirected graph (tạo đồ thị vô hướng)
-
     undirected = [[] for _ in range(n)]
     for u in range(n):
         for v in adj[u]:
             undirected[u].append(v)
             undirected[v].append(u)
-
     visited = [False] * n
     dfs(0, visited, undirected)
     return all(visited)
