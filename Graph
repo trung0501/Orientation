@@ -1,22 +1,25 @@
-def read_graph(filename):
-    with open(filename, "r") as file:
-        n = int(file.readline())
+# Read the list from the file
+def read_adj_list(filename):
+    with open(filename, "r") as f:
+        n = int(f.readline())  
         adj = []
         for _ in range(n):
-            line = file.readline().strip()
+            line = f.readline().strip()
             neighbors = list(map(int, line.split()))
-            if neighbors == [0]:
+            if neighbors == [0]:      
                 adj.append([])
             else:
                 adj.append([v - 1 for v in neighbors])  
     return n, adj
 
+# Recursive function for DFS of a graph
 def dfs(u, visited, adj):
     visited[u] = True
     for v in adj[u]:
         if not visited[v]:
             dfs(v, visited, adj)
 
+# Check for strong connectivity of a graph
 def is_strongly_connected(n, adj):
     for i in range(n):
         visited = [False] * n
@@ -25,19 +28,21 @@ def is_strongly_connected(n, adj):
             return False
     return True
 
+# Check for weak connectivity of a graph
 def is_weakly_connected(n, adj):
+    # Create an undirected graph (tạo đồ thị vô hướng)
     undirected = [[] for _ in range(n)]
     for u in range(n):
         for v in adj[u]:
             undirected[u].append(v)
             undirected[v].append(u)
+
     visited = [False] * n
     dfs(0, visited, undirected)
     return all(visited)
 
 def main():
-    n, adj = read_graph("dske.in")
-
+    n, adj = read_adj_list("dske.in")
     if is_strongly_connected(n, adj):
         print("Strongly connected graph.")
     elif is_weakly_connected(n, adj):
@@ -46,4 +51,4 @@ def main():
         print("The graph is neither strongly connected nor weakly connected.")
 
 if __name__ == "__main__":
-    main() 
+    main()
