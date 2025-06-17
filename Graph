@@ -1,10 +1,10 @@
 # Read the list from the file
 def read_adj_list(filename):
-    with open(filename, "r") as f:
-        n = int(f.readline())  
+    with open(filename, "r") as file:
+        n = int(file.readline())  
         adj = []
         for _ in range(n):
-            line = f.readline().strip()
+            line = file.readline().strip()
             neighbors = list(map(int, line.split()))
             if neighbors == [0]:      
                 adj.append([])
